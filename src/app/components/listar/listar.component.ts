@@ -10,22 +10,26 @@ import { tap } from 'rxjs';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './listar.component.html',
-  styleUrl: './listar.component.css'
+  styleUrl: './listar.component.css',
 })
 export class ListarComponent {
-  listaComentarios:Comentario[] = [];
+  listaComentarios: Comentario[] = [];
   constructor(private _comentarioServicio: ComentarioService) {}
   ngOnInit() {
     this.getComentarios();
   }
-  getComentarios() { 
-    this._comentarioServicio.getListComentarios().subscribe(data => {
-      this.listaComentarios = data;
-    }, error => {
-      console.log(error);
-    })
+  //Funcion para obtener los comentarios
+  getComentarios() {
+    this._comentarioServicio.getListComentarios().subscribe(
+      (data) => {
+        this.listaComentarios = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-  eliminarComentario(id : any) {
+  eliminarComentario(id: any) {
     console.log(id);
     if (id !== undefined) {
       this._comentarioServicio.deleteComentario(id).subscribe({
@@ -33,9 +37,9 @@ export class ListarComponent {
           console.log(`Comentario con id ${id} eliminado`, response);
           this.getComentarios(); // Actualiza la lista de comentarios después de eliminar
         },
-        error: error => {
+        error: (error) => {
           console.error('Error al eliminar el comentario:', error);
-        }
+        },
       });
     }
   }
