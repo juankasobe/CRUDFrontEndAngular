@@ -1,5 +1,5 @@
-<h3 class="mt-5">Agregar Comentario</h3>
-<form [formGroup]="agregarComentario" (ngSubmit)="agregar()">
+<h3 class="mt-5">{{titulo}} Comentario</h3>
+<form [formGroup]="agregarComentario" (ngSubmit)="agregarEditar()">
     <div class="mb-3">
         <label for="titulo" class="form-label">Título</label>
         <input type="text" class="form-control" formControlName="titulo" id="titulo" autocomplete="off">

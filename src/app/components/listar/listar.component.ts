@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Comentario } from '../../interfaces/comentarios';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { ComentarioService } from '../../services/comentario.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-listar',
@@ -11,8 +13,30 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './listar.component.css'
 })
 export class ListarComponent {
-  listaComentarios:Comentario[] = [
-    {titulo:'Angular',creador:'Juan',fechaCreacion:new Date(),texto:'Crear Crud en Angular'},
-    {titulo:'Bootstrap',creador:'Pedro',fechaCreacion:new Date(),texto:'Angular'}
-  ]
+  listaComentarios:Comentario[] = [];
+  constructor(private _comentarioServicio: ComentarioService) {}
+  ngOnInit() {
+    this.getComentarios();
+  }
+  getComentarios() { 
+    this._comentarioServicio.getListComentarios().subscribe(data => {
+      this.listaComentarios = data;
+    }, error => {
+      console.log(error);
+    })
+  }
+  eliminarComentario(id : any) {
+    console.log(id);
+    if (id !== undefined) {
+      this._comentarioServicio.deleteComentario(id).subscribe({
+        next: (response) => {
+          console.log(`Comentario con id ${id} eliminado`, response);
+          this.getComentarios(); // Actualiza la lista de comentarios después de eliminar
+        },
+        error: error => {
+          console.error('Error al eliminar el comentario:', error);
+        }
+      });
+    }
+  }
 }

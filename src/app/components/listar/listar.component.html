@@ -9,8 +9,8 @@
 <table class="table table-hover mt-5" *ngIf="listaComentarios.length>0">
     <thead>
         <tr>
-            <td>Título</td>
             <td>Creador</td>
+            <td>Título</td>
             <td>Fecha</td>
             <td></td>
             <td></td>
@@ -19,11 +19,11 @@
     <tbody>
         <tr *ngFor="let comentario of listaComentarios">
             <td>
-                <a [routerLink]="['ver',1]">{{comentario.creador}}</a></td>
+                <a [routerLink]="['ver',comentario.id]">{{comentario.creador}}</a></td>
             <td>{{comentario.titulo}}</td>
             <td>{{comentario.fechaCreacion | date:'dd/mm/yy'}}</td>
-            <td style="width: 10%;"><button class="btn btn-primary float-end btn-sm">editar</button></td>
-            <td style="width: 8%;"><button class="btn btn-danger float-end btn-sm">eliminar</button></td>
+            <td style="width: 10%;"><button class="btn btn-primary float-end btn-sm" [routerLink]="['/editar', comentario.id]">editar</button></td>
+            <td style="width: 8%;"><button (click)="eliminarComentario(comentario.id)" class="btn btn-danger float-end btn-sm">eliminar</button></td>
         </tr>
     </tbody>
 </table>

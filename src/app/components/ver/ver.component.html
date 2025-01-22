@@ -1,1 +1,8 @@
-<p>ver works!</p>
+<div *ngIf="comentario !== undefined" >
+    <h3>{{comentario?.titulo}}</h3>
+    <h5>{{comentario?.texto}}</h5>
+    <ul>
+        <li>{{comentario?.creador}}</li>
+        <li>{{comentario?.fechaCreacion | date:'dd/mm/yy'}}</li>
+    </ul>
+</div>
